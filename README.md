@@ -1,5 +1,7 @@
 <h1>Simple user board project</h1>
 
+This project does not use front-end framework like Vue.js or React.js, but just use Express.js, Bootstrap and jQuery.
+
 Front-end : Bootstrap 4, jQuery
 </br>Back-end : Node.js, Express.js
 </br>Data fetching : GraphQL, Mongoose
