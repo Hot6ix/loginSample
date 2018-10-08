@@ -18,7 +18,7 @@ How to run
 4. Run app -> "DEBUG=/:* npm start"
 5. Load "localhost:3000" in web browser
 
-You can go to url : <a href="http://localhost:3000/graphql">localhost:3000/graphql</a> to test graphql api
+You can go to url : <a href="http://localhost:3000/graphql" target="_blank">localhost:3000/graphql</a> to test graphql api
 
 GraphQL endpoint
 - Query
