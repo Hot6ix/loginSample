@@ -1,9 +1,9 @@
 Simple user board project
 
 Front-end : Bootstrap 4, jQuery
-Back-end : Node.js, Express.js
-Data fetching : GraphQL, Mongoose
-Authentication : JWT
+</br>Back-end : Node.js, Express.js
+</br>Data fetching : GraphQL, Mongoose
+</br>Authentication : JWT
 
 Pre-work
 - MongoDB and Node.js must be installed in your computer.
