@@ -6,11 +6,16 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="/javascripts/cookie.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </head>
   <body>
-      <script type="text/javascript">
+      
+      <% include ./header %>
 
+      <script type="text/javascript">
+        var cookie = JSON.parse(getCookie().val);
+        
         var query = `{
           getPosts {
             id
@@ -19,7 +24,42 @@
             createdAt
           }
         }`
+
         $(document).ready(() => {
+          // Hide detail_view first
+          $('#detail_view').hide();
+
+          // Hide detail view and show list
+          $('#backTolist').click(() => {
+              $('#posts_view').show();
+              $('#detail_view').hide();
+          });
+
+          $('#write').click(() => {
+
+          });
+          
+          $('#delete').click(() => {
+            if(cookie.nickname === $('#delete').attr('uid')) {
+              var delQuery = `mutation delete {
+                deletePost(pid: "${$('#delete').attr('_id')}", token: "${cookie.token}") {
+                  msg
+                }
+              }`;
+              $.ajax({
+                url: '/graphql?query=' + delQuery,
+                type: 'POST',
+                success: (data) => {
+                  window.location.href = '/';
+                }
+              });
+            }
+            else {
+              console.log('different')
+            }
+          });
+
+          // Get list and show
           $.ajax({
             url: '/graphql?query=' + query,
             type: 'GET',
@@ -29,7 +69,7 @@
                 var date = new Date(array[i].createdAt);
 
                 $('#contents').append(
-                  '<tr><td scope="row">' + array[i].title + '</td>'
+                  '<tr><td scope="row"><a href="#" onclick=getPost("' + array[i].id + '")>' + array[i].title + '</a></td>'
                   + '<td>' + array[i].uid + '</td>'
                   + '<td>' + date.toLocaleDateString() + '</td>'
                   + '</tr>'
@@ -38,13 +78,46 @@
             }
           })
         })
+
+        // Get single post and show
+        function getPost(data) {
+          $('#detail').empty();
+          var detail = `{
+            getPost(id: "${data}") {
+              id
+              uid
+              title
+              content
+              createdAt
+            }
+          }`
+
+          $.ajax({
+            url: '/graphql?query=' + detail,
+            method: 'GET',
+            success: (data) => {
+              $('#posts_view').hide();
+              $('#detail_view').show();
+              $.each(data.data.getPost, (key, value) => {
+                var val = value;
+                if(key == "createdAt") val = new Date(val).toLocaleString();
+                if(key === 'id') $('#delete').attr('_id', val);
+                if(key === 'uid') $('#delete').attr('uid', val);
+                $('#detail').append('<tr>' +
+                    '<td scope="row">' + key + '</td>' +
+                    '<td scope="row">' + val + '</td>' +
+                    '</tr>');
+              })
+            }
+          })
+        }
       </script>
-      
-      <% include ./header %>
 
       <div class='container-fluid mt-5'>
-        <div class='row'>
-            <table class='table table-striped'>
+        <div class='row' id='token_view'>
+        </div>
+        <div class='row' id='posts_view'>
+            <table class='table table-striped table-bordered'>
                 <thead>
                   <tr>
                     <th scope="col">Title</th>
@@ -55,6 +128,22 @@
                 <tbody id='contents'>
                 </tbody>
             </table>
+            <button id='write' type="button" class="btn btn-dark">Write</button>
+        </div>
+        <div id='detail_view' class='row'>
+            <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th scope="col">Key</th>
+                    <th scope="col">Value</th>
+                  </tr>
+                </thead>
+                <tbody id='detail'>
+                </tbody>
+            </table>
+            
+            <button id='backTolist' type="button" class="btn btn-dark">Back to list</button>
+            <button id='delete' type="button" class="btn btn-danger ml-2">Delete</button>
         </div>
       </div>
   </body>

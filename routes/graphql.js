@@ -51,9 +51,9 @@ var schema = buildSchema(`
     }
     
     type Query {
-        getUserInfo(token: String): User
         getUsers(token: String): [User]
         getPosts: [Post]
+        getPost(id: ID!): Post
     }
 
     type Mutation {
@@ -70,7 +70,8 @@ var root = {
     getUsers: userController.getUsers,
     writePost: postController.write,
     deletePost: postController.delete,
-    getPosts: postController.list
+    getPosts: postController.list,
+    getPost: postController.single
 };
 
 router.use('/', graphqlHTTP({

@@ -1,22 +1,14 @@
+
+<script src="/javascripts/cookie.js"></script>
+
 <script>
     $(document).ready(() => {
-        var cookie = cookieToObject();
+        var cookie = JSON.parse(getCookie().val);
         if(cookie.token != null) {
             $('#login').hide();
-        }
-
-        function cookieToObject() {
-        var cookie = document.cookie.split(';');
-        var result = {};
-
-        for(var i=0; i<cookie.length; i++) {
-            var key = cookie[i].split('=')[0];
-            var value = cookie[i].split('=')[1];
-            
-            result[key] = value;
-        }
-
-        return result;
+            $('#menu').append(
+                '<a id="uid" class="nav-item nav-link active" href="/login">' + cookie.nickname + '</a>'
+            )
         }
     });
 </script>
@@ -28,7 +20,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav ml-auto">
+        <div id='menu' class="navbar-nav ml-auto">
             <a id='login' class="nav-item nav-link active" href="/login">Login <span class="sr-only">(current)</span></a>
         </div> 
     </div>

@@ -10,11 +10,6 @@
   </head>
   <body>
       <script type="text/javascript">
-        $(document).ready(() => {
-            var cookie = document.cookie;
-            console.log(cookie);
-        })
-
         function login() {
             var id = $('#id').val();
             var pw = $('#pw').val();
@@ -22,6 +17,7 @@
                 var query = `mutation {
                     login(id: "${id}", password: "${pw}") {
                         msg
+                        nickname
                         token
                     }
                 }`
@@ -32,7 +28,12 @@
                         if(result.data.login.token != null) {
                             var expire = new Date();
                             expire.setMonth(expire.getMonth() + 1);
-                            document.cookie = 'token=' + result.data.login.token + '; expires=' + expire
+                            console.log(result);
+                            var cookieVal = {
+                                nickname: result.data.login.nickname,
+                                token: result.data.login.token
+                            }
+                            document.cookie = 'val=' + JSON.stringify(cookieVal) + '; expires=' + expire
                             window.location.href = '/';
                         }
                     }
