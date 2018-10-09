@@ -5,13 +5,57 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </head>
   <body>
-      <% include ./header %>
+      <script type="text/javascript">
+
+        var query = `{
+          getPosts {
+            id
+            uid
+            title
+            createdAt
+          }
+        }`
+        $(document).ready(() => {
+          $.ajax({
+            url: '/graphql?query=' + query,
+            type: 'GET',
+            success: (data) => {
+              var array = data.data.getPosts;
+              for(var i=0; i<array.length; i++) {
+                var date = new Date(array[i].createdAt);
+
+                $('#contents').append(
+                  '<tr><td scope="row">' + array[i].title + '</td>'
+                  + '<td>' + array[i].uid + '</td>'
+                  + '<td>' + date.toLocaleDateString() + '</td>'
+                  + '</tr>'
+                )
+              }
+            }
+          })
+        })
+      </script>
       
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+      <% include ./header %>
+
+      <div class='container-fluid mt-5'>
+        <div class='row'>
+            <table class='table table-striped'>
+                <thead>
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Date</th>
+                  </tr>
+                </thead>
+                <tbody id='contents'>
+                </tbody>
+            </table>
+        </div>
+      </div>
   </body>
 </html>

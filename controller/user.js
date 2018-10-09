@@ -1,11 +1,11 @@
 var userSchema = require('../models/user');
 var tokenManager = require('../tools/tokenManager');
 
-exports.signUp = async (user) => {
+exports.signUp = async (obj, args, context, info) => {
     var msg = {};
     try {
-        user.user.level = 0;
-        await new userSchema(user.user).save();
+        obj.user.level = 0;
+        await new userSchema(obj.user).save();
         msg.msg = 'succeed'
         return msg;
     } catch (err) {
@@ -15,13 +15,13 @@ exports.signUp = async (user) => {
     return msg;
 }
 
-exports.login = async (user) => {
+exports.login = async (obj, args, context, info) => {
     var msg = {};
 
     // get user data
     var query = userSchema.where({
-        uid: user.id,
-        password: user.password
+        uid: obj.id,
+        password: obj.password
     });
     try {
         var result = await query.findOne();
@@ -29,6 +29,7 @@ exports.login = async (user) => {
         var token = await tokenManager.createToken(result);
 
         msg.msg = 'succeed'
+        msg.nickname = result.nickname;
         msg.token = token
     } catch (err) {
         console.log(err);
@@ -38,9 +39,9 @@ exports.login = async (user) => {
     return msg;
 }
 
-exports.getUsers = async (token) => {
+exports.getUsers = async (obj, args, context, info) => {
     // get users
-    var result = await tokenManager.verifyToken(token.token);
+    var result = await tokenManager.verifyToken(obj.token);
     if(result) {
         if(result.level > 0) {
             return await userSchema.find();
@@ -52,11 +53,10 @@ exports.getUsers = async (token) => {
     else { throw new Error('Unknown') };
 }
 
-exports.checkUser = async (user) => {
+exports.checkUser = async (obj, args, context, info) => {
     // get user data
-    console.log(user);
     var query = userSchema.where({
-        uid: user.uid
+        uid: obj.uid
     });
     try {
         var result= await query.findOne();

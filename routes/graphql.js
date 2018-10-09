@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var graphqlHTTP = require('express-graphql');
-var { buildSchema } = require('graphql');
+var { buildSchema, GraphQLObjectType, GraphQLSchema } = require('graphql');
+var graphql = require('graphql');
 var userController = require('../controller/user');
 var postController = require('../controller/post');
 
@@ -33,6 +34,7 @@ var schema = buildSchema(`
 
     type LoginResult implements Result {
         msg: String
+        nickname: String
         token: String
     }
 
@@ -41,9 +43,11 @@ var schema = buildSchema(`
     }
 
     type Post {
+        id: ID
         uid: String
         title: String
         content: String
+        createdAt: Float
     }
     
     type Query {
@@ -56,6 +60,7 @@ var schema = buildSchema(`
         signUp(user: UserInfo): SingUpResult
         login(id: String, password: String): LoginResult
         writePost(post: PostInput, token: String): WriteResult
+        deletePost(pid: ID, token: String): WriteResult
     }
 `);
 
@@ -64,6 +69,7 @@ var root = {
     login: userController.login,
     getUsers: userController.getUsers,
     writePost: postController.write,
+    deletePost: postController.delete,
     getPosts: postController.list
 };
 
