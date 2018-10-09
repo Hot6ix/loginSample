@@ -13,7 +13,7 @@
         function login() {
             var id = $('#id').val();
             var pw = $('#pw').val();
-            if(id != null || pw != null) {
+            if(id != "" && pw != "") {
                 var query = `mutation {
                     login(id: "${id}", password: "${pw}") {
                         msg
@@ -28,7 +28,6 @@
                         if(result.data.login.token != null) {
                             var expire = new Date();
                             expire.setMonth(expire.getMonth() + 1);
-                            console.log(result);
                             var cookieVal = {
                                 nickname: result.data.login.nickname,
                                 token: result.data.login.token
@@ -36,8 +35,14 @@
                             document.cookie = 'val=' + JSON.stringify(cookieVal) + '; expires=' + expire
                             window.location.href = '/';
                         }
+                        else {
+                            alert('ID or Password are incorrect!');
+                        }
                     }
                 })
+            }
+            else {
+                alert('You need to fill out ID and Password!');
             }
         }
         
@@ -45,7 +50,7 @@
             var id = $('#sign_id').val();
             var pw = $('#sign_pw').val();
             var nickname = $('#nickname').val();
-            if(id != null || pw != null || nickname != null) {
+            if(id != "" && pw != "" && nickname != "") {
                 var query = `mutation {
                     signUp(user: {
                         uid: "${id}",
@@ -62,6 +67,9 @@
                         console.log(result);
                     }
                 })
+            }
+            else {
+                alert('You need to fill out ID, Password and Nickname!');
             }
         }
       </script>

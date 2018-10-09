@@ -84,30 +84,37 @@
               $('#title').empty();
               $('#content').empty();
 
-              var updateQuery = `mutation update {
-                updatePost(pid: "${$('#id').html()}", token: "${cookie.token}", post: {
-                  title: "${utitle}",
-                  content: "${ucontent}"
-                }) {
-                  msg
-                }
-              }`;
+              if(cookie != null) {
+                var updateQuery = `mutation update {
+                  updatePost(pid: "${$('#id').html()}", token: "${cookie.token}", post: {
+                    title: "${utitle}",
+                    content: "${ucontent}"
+                  }) {
+                    msg
+                  }
+                }`;
 
-              $.ajax({
-                url: '/graphql?query=' + updateQuery,
-                method: 'POST',
-                success: (data) => {
-                  if(data.data.updatePost.msg == 'failed') {
-                    $('#title').html(title);
-                    $('#content').html(content);
+                $.ajax({
+                  url: '/graphql?query=' + updateQuery,
+                  method: 'POST',
+                  success: (data) => {
+                    if(data.data.updatePost.msg == 'failed') {
+                      $('#title').html(title);
+                      $('#content').html(content);
+                      alert('You are not owner of the post!');
+                    }
+                    else {
+                      $('#title').html(utitle);
+                      $('#content').html(ucontent);
+                    }
                   }
-                  else {
-                    $('#title').html(utitle);
-                    $('#content').html(ucontent);
-                  }
-                  console.log(data);
-                }
-              });
+                });
+              }
+              else {
+                $('#title').html(title);
+                $('#content').html(content);
+                alert('You must login first!');
+              }
             }
           });
 
@@ -119,47 +126,60 @@
 
           // Save button
           $('#save').click(() => {
-            var title = $('#title').val();
-            var content = $('#content').val();
-            var writeQuery = `mutation write {
-              writePost(post: {
-                title: "${title}",
-                content: "${content}"
-              }, token: "${cookie.token}") {
-                msg
-              }
-            }`;
-
-            if(title != null && content != null) {
-              $.ajax({
-                url: '/graphql?query=' + writeQuery,
-                method: 'POST',
-                success: (data) => {
-                  window.location.href = '/';
+            if(cookie != null) {
+              var title = $('#title').val();
+              var content = $('#content').val();
+              var writeQuery = `mutation write {
+                writePost(post: {
+                  title: "${title}",
+                  content: "${content}"
+                }, token: "${cookie.token}") {
+                  msg
                 }
-              });
+              }`;
+
+              if(title !== "" && content !== "") {
+                $.ajax({
+                  url: '/graphql?query=' + writeQuery,
+                  method: 'POST',
+                  success: (data) => {
+                    window.location.href = '/';
+                  }
+                });
+              }
+              else {
+                alert('You need to fill out title and content!');
+              }
+            }
+            else {
+                alert('You must login first!');
             }
           })
 
           // Delete button
           $('#delete').click(() => {
-            var deleteQuery = `mutation delete {
-              deletePost(pid: "${$('#delete').attr('_id')}", token: "${cookie.token}") {
-                msg
-              }
-            }`;
-
-            if(cookie.nickname === $('#delete').attr('uid')) {
-              $.ajax({
-                url: '/graphql?query=' + deleteQuery,
-                type: 'POST',
-                success: (data) => {
-                  window.location.href = '/';
+            if(cookie != null) {
+              var deleteQuery = `mutation delete {
+                deletePost(pid: "${$('#delete').attr('_id')}", token: "${cookie.token}") {
+                  msg
                 }
-              });
+              }`;
+
+              if(cookie.nickname === $('#delete').attr('uid')) {
+                $.ajax({
+                  url: '/graphql?query=' + deleteQuery,
+                  type: 'POST',
+                  success: (data) => {
+                    window.location.href = '/';
+                  }
+                });
+              }
+              else {
+                alert('You are not owner of this post!');
+              }
             }
             else {
-              console.log('different')
+                alert('You must login first!');
             }
           });
 

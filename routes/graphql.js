@@ -68,6 +68,7 @@ var schema = buildSchema(`
     }
 `);
 
+// Mapping between schema and function
 var root = {
     signUp: userController.signUp,
     login: userController.login,
