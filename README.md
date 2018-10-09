@@ -34,11 +34,11 @@ You can go to url : <a target="_blank" href="http://localhost:3000/graphql">loca
 	- deletePost(pid, token): Delete a post and return message of write result (need token to verify document owner)
 
 <h4>Web endpoint</h4>
-- /
-	- Main page
-	- Can CRUD a post
-- /login
-	- Login and sign up page
-- /graphql
-	- GraphQL page (graphiql is enabled)
-	- Use for request data and test
+- /</br>
+	- Main page</br>
+	- Can CRUD a post</br>
+- /login</br>
+	- Login and sign up page</br>
+- /graphql</br>
+	- GraphQL page (graphiql is enabled)</br>
+	- Use for request data and test</br>
