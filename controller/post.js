@@ -36,6 +36,31 @@ exports.write = async (obj, args, context, info) => {
     return msg;
 }
 
+exports.update = async (obj, args, context, info) => {
+    var msg = {};
+    var pid = obj.pid;
+    var token = obj.token;
+    var newPost = obj.post;
+    var decoded = await tokenManager.verifyToken(token);
+
+    if(decoded) {
+        try {
+            var result = await postSchema.findOneAndUpdate({_id: pid, uid: decoded.uid}, newPost).exec()
+            if(result) msg.msg = 'succeed'
+            else msg.msg ='failed'
+        } catch (err) {
+            console.log(err);
+            msg.msg = 'failed'
+        }
+    }
+    else {
+        // failed to verify
+        msg.msg = 'token is invalid';
+    }
+
+    return msg;
+}
+
 exports.delete = async (obj, args, context, info) => {
     var msg = {};
 
@@ -46,10 +71,7 @@ exports.delete = async (obj, args, context, info) => {
 
     if(decoded) {
         try {
-            console.log(id);
-            console.log(decoded.uid);
             var result = await postSchema.deleteOne({_id: id, uid: decoded.uid}).exec();
-            console.log(result);
             if(result != null && result.n > 0) msg.msg = 'succeed'
             else msg.msg ='failed'
         } catch (err) {

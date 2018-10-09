@@ -14,40 +14,144 @@
       <% include ./header %>
 
       <script type="text/javascript">
-        var cookie = JSON.parse(getCookie().val);
+        var isModifyMode = false;
+        var cookie;
+        try {
+          cookie = JSON.parse(getCookie().val);
+        } catch (err) {
+          console.error(err);
+        }
         
-        var query = `{
+        var listQuery = `{
           getPosts {
             id
             uid
             title
             createdAt
           }
-        }`
+        }`;
 
         $(document).ready(() => {
-          // Hide detail_view first
+          // Hide unnecessary view first
           $('#detail_view').hide();
+          $('#write_view').hide();
 
           // Hide detail view and show list
-          $('#backTolist').click(() => {
-              $('#posts_view').show();
-              $('#detail_view').hide();
-          });
+          $('#backTolist').click(() => { window.location.href='/' });
 
           $('#write').click(() => {
-
+            // Clear title and content
+            $('#title').val('');
+            $('#content').val('');
+            
+            // Hide list and show write form
+            $('#posts_view').hide();
+            $('#write_view').show();
           });
-          
-          $('#delete').click(() => {
-            if(cookie.nickname === $('#delete').attr('uid')) {
-              var delQuery = `mutation delete {
-                deletePost(pid: "${$('#delete').attr('_id')}", token: "${cookie.token}") {
+
+          var title, content;
+          $('#update').click(() => {
+            isModifyMode = !isModifyMode;
+
+            if(isModifyMode) {
+              $('#update').html('Save');
+              $('#delete').attr('disabled', true);
+
+              title = $('#title').html();
+              content = $('#content').html();
+
+              $('#title').empty();
+              $('#content').empty();
+
+              $('#title').append(`
+                <div class="input-group input-group-sm">
+                  <input id='update_title' type="text" class="form-control" placeholder='Title' value='${title}'>
+                </div>
+              `);
+              $('#content').append(`
+                <div class="input-group input-group-sm">
+                  <input id='update_content' type="text" class="form-control" placeholder='Content' value='${content}'>
+                </div>
+              `);
+            }
+            else {
+              $('#update').html('Update');
+              $('#delete').removeAttr('disabled');
+
+              var utitle = $('#update_title').val();
+              var ucontent = $('#update_content').val();
+              
+              $('#title').empty();
+              $('#content').empty();
+
+              var updateQuery = `mutation update {
+                updatePost(pid: "${$('#id').html()}", token: "${cookie.token}", post: {
+                  title: "${utitle}",
+                  content: "${ucontent}"
+                }) {
                   msg
                 }
               }`;
+
               $.ajax({
-                url: '/graphql?query=' + delQuery,
+                url: '/graphql?query=' + updateQuery,
+                method: 'POST',
+                success: (data) => {
+                  if(data.data.updatePost.msg == 'failed') {
+                    $('#title').html(title);
+                    $('#content').html(content);
+                  }
+                  else {
+                    $('#title').html(utitle);
+                    $('#content').html(ucontent);
+                  }
+                  console.log(data);
+                }
+              });
+            }
+          });
+
+          $('#cancel').click(() => {
+            // Hide write form and show list
+            $('#posts_view').show();
+            $('#write_view').hide();
+          });
+
+          // Save button
+          $('#save').click(() => {
+            var title = $('#title').val();
+            var content = $('#content').val();
+            var writeQuery = `mutation write {
+              writePost(post: {
+                title: "${title}",
+                content: "${content}"
+              }, token: "${cookie.token}") {
+                msg
+              }
+            }`;
+
+            if(title != null && content != null) {
+              $.ajax({
+                url: '/graphql?query=' + writeQuery,
+                method: 'POST',
+                success: (data) => {
+                  window.location.href = '/';
+                }
+              });
+            }
+          })
+
+          // Delete button
+          $('#delete').click(() => {
+            var deleteQuery = `mutation delete {
+              deletePost(pid: "${$('#delete').attr('_id')}", token: "${cookie.token}") {
+                msg
+              }
+            }`;
+
+            if(cookie.nickname === $('#delete').attr('uid')) {
+              $.ajax({
+                url: '/graphql?query=' + deleteQuery,
                 type: 'POST',
                 success: (data) => {
                   window.location.href = '/';
@@ -61,8 +165,8 @@
 
           // Get list and show
           $.ajax({
-            url: '/graphql?query=' + query,
-            type: 'GET',
+            url: '/graphql?query=' + listQuery,
+            method: 'GET',
             success: (data) => {
               var array = data.data.getPosts;
               for(var i=0; i<array.length; i++) {
@@ -82,7 +186,8 @@
         // Get single post and show
         function getPost(data) {
           $('#detail').empty();
-          var detail = `{
+          
+          var detailQuery = `{
             getPost(id: "${data}") {
               id
               uid
@@ -90,10 +195,10 @@
               content
               createdAt
             }
-          }`
+          }`;
 
           $.ajax({
-            url: '/graphql?query=' + detail,
+            url: '/graphql?query=' + detailQuery,
             method: 'GET',
             success: (data) => {
               $('#posts_view').hide();
@@ -105,9 +210,9 @@
                 if(key === 'uid') $('#delete').attr('uid', val);
                 $('#detail').append('<tr>' +
                     '<td scope="row">' + key + '</td>' +
-                    '<td scope="row">' + val + '</td>' +
+                    '<td scope="row" id=' + key + '>' + val + '</td>' +
                     '</tr>');
-              })
+              });
             }
           })
         }
@@ -130,6 +235,7 @@
             </table>
             <button id='write' type="button" class="btn btn-dark">Write</button>
         </div>
+
         <div id='detail_view' class='row'>
             <table class='table table-striped table-bordered'>
                 <thead>
@@ -143,8 +249,23 @@
             </table>
             
             <button id='backTolist' type="button" class="btn btn-dark">Back to list</button>
+            <button id='update' type="button" class="btn btn-primary ml-2">Update</button>
             <button id='delete' type="button" class="btn btn-danger ml-2">Delete</button>
         </div>
+
+        <div id='write_view' class='row'>
+            <div class="input-group input-group mb-3">
+              <input id='title' type="text" class="form-control" placeholder='Title' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+
+            <div class="input-group input-group mb-3">
+              <input id='content' type="text" class="form-control" placeholder='Content' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+
+            <button id='cancel' type="button" class="btn btn-danger">Cancel</button>
+            <button id='save' type="button" class="btn btn-dark ml-2">Save</button>
+        </div>
+
       </div>
   </body>
 </html>

@@ -40,6 +40,30 @@
                 })
             }
         }
+        
+        function signUp() {
+            var id = $('#sign_id').val();
+            var pw = $('#sign_pw').val();
+            var nickname = $('#nickname').val();
+            if(id != null || pw != null || nickname != null) {
+                var query = `mutation {
+                    signUp(user: {
+                        uid: "${id}",
+                        password: "${pw}",
+                        nickname: "${nickname}"
+                    }) {
+                        msg
+                    }
+                }`
+                $.ajax({
+                    url: '/graphql?query=' + query,
+                    method: 'POST',
+                    success: (result) => {
+                        console.log(result);
+                    }
+                })
+            }
+        }
       </script>
       
       
@@ -47,6 +71,7 @@
 
       <div class='container-fluid mt-5'>
         <div class='row'>
+            <h2>Login</h2>
             <div class='input-group'>
                 <input id='id' type='text' class='form-control' placeholder='ID'/>
             </div>
@@ -54,6 +79,19 @@
                 <input id='pw' type='password' class='form-control' placeholder='Password'/>
             </div>
             <button id='login' class='btn btn-dark' onclick="login()">Login</button>
+        </div>
+        <div class='row mt-5'>
+            <h2>Sign Up</h2>
+            <div class='input-group'>
+                <input id='sign_id' type='text' class='form-control' placeholder='ID'/>
+            </div>
+            <div class='input-group'>
+                <input id='sign_pw' type='password' class='form-control' placeholder='Password'/>
+            </div>
+            <div class='input-group'>
+                <input id='nickname' type='text' class='form-control' placeholder='Nickname'/>
+            </div>
+            <button id='signup' class='btn btn-success' onclick="signUp()">SignUp</button>
         </div>
       </div>
   </body>

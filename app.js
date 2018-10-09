@@ -6,7 +6,6 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var signupRouter = require('./routes/signup');
 var graphqlRouter = require('./routes/graphql');
 var loginRouter = require('./routes/login');
 var mongoose = require('mongoose');
@@ -29,7 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/graphql', graphqlRouter);
-app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler

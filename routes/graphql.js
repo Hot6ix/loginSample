@@ -24,8 +24,10 @@ var schema = buildSchema(`
     }
 
     type User {
+        id: ID
         uid: String
         nickname: String
+        level: Int
     }
 
     type SingUpResult implements Result {
@@ -51,6 +53,7 @@ var schema = buildSchema(`
     }
     
     type Query {
+        getUserInfo(token: String): User
         getUsers(token: String): [User]
         getPosts: [Post]
         getPost(id: ID!): Post
@@ -59,16 +62,19 @@ var schema = buildSchema(`
     type Mutation {
         signUp(user: UserInfo): SingUpResult
         login(id: String, password: String): LoginResult
-        writePost(post: PostInput, token: String): WriteResult
-        deletePost(pid: ID, token: String): WriteResult
+        writePost(post: PostInput, token: String!): WriteResult
+        deletePost(pid: ID, token: String!): WriteResult
+        updatePost(pid: ID, token: String!, post: PostInput): WriteResult
     }
 `);
 
 var root = {
     signUp: userController.signUp,
     login: userController.login,
+    getUserInfo: userController.getUser,
     getUsers: userController.getUsers,
     writePost: postController.write,
+    updatePost: postController.update,
     deletePost: postController.delete,
     getPosts: postController.list,
     getPost: postController.single

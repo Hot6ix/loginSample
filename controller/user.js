@@ -39,6 +39,27 @@ exports.login = async (obj, args, context, info) => {
     return msg;
 }
 
+exports.getUser = async (obj, args, context, info) => {
+    // get user data
+    
+    var decoded = await tokenManager.verifyToken(obj.token);
+
+
+    if(decoded) {
+        var query = userSchema.where({
+            uid: decoded.uid
+        });
+        var result;
+        try {
+            result = await query.findOne();
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    return result;
+}
+
 exports.getUsers = async (obj, args, context, info) => {
     // get users
     var result = await tokenManager.verifyToken(obj.token);

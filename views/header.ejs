@@ -3,11 +3,16 @@
 
 <script>
     $(document).ready(() => {
-        var cookie = JSON.parse(getCookie().val);
+        var cookie;
+        try {
+          cookie = JSON.parse(getCookie().val);
+        } catch (err) {
+          console.error(err);
+        }
         if(cookie.token != null) {
             $('#login').hide();
             $('#menu').append(
-                '<a id="uid" class="nav-item nav-link active" href="/login">' + cookie.nickname + '</a>'
+                '<a id="uid" class="nav-item nav-link active" href="/users">' + cookie.nickname + '</a>'
             )
         }
     });
