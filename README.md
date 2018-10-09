@@ -1,5 +1,7 @@
 <h1>Simple user board project</h1>
 
+Simple user board web application using several library. To learn graphql and other libraries. This project needs to be take care like if conditions are not met, it won't warn you. 
+
 **Features**
 - Login
 - CRUD a post
