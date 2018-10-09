@@ -1,7 +1,5 @@
 <h1>Simple user board project</h1>
 
-This project does not use front-end framework like Vue.js or React.js, but just use Express.js, Bootstrap and jQuery.
-
 **Features**
 - Login
 - CRUD a post
@@ -11,6 +9,8 @@ Front-end : Bootstrap 4, jQuery
 Back-end : Node.js, Express.js  
 Data fetching : GraphQL, Mongoose  
 Authentication : JWT  
+
+This project does not use front-end framework like Vue.js or React.js, but just use Express.js, Bootstrap and jQuery.
 
 **Pre-work**
 - MongoDB and Node.js must be installed in your computer.
