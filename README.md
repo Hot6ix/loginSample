@@ -2,6 +2,11 @@
 
 This project does not use front-end framework like Vue.js or React.js, but just use Express.js, Bootstrap and jQuery.
 
+Features
+- Login
+- CRUD a post
+
+What used
 Front-end : Bootstrap 4, jQuery
 </br>Back-end : Node.js, Express.js
 </br>Data fetching : GraphQL, Mongoose
