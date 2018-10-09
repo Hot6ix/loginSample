@@ -20,7 +20,7 @@ How to run
 
 You can go to url : <a target="_blank" href="http://localhost:3000/graphql">localhost:3000/graphql</a> to test graphql api
 
-GraphQL endpoint
+GraphQL queries and mutations
 - Query
 	- getUsers(Token) : Return user information list (need token to auth and user level must be greater than 0 in DB)
 	- getPosts : Return posts
