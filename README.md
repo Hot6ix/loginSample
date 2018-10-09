@@ -33,12 +33,12 @@ GraphQL endpoint
 	- updatePost(pid, token, postInput): Update a post and return message of write result (need token to verify document owner)
 	- deletePost(pid, token): Delete a post and return message of write result (need token to verify document owner)
 
-<h4>Web endpoint</h4>
+Web endpoint
 - /
-</br>	- Main page
-</br>	- Can CRUD a post
+	- Main page
+	- Can CRUD a post
 - /login
-</br>	- Login and sign up page
+	- Login and sign up page
 - /graphql
-</br>	- GraphQL page (graphiql is enabled)
-</br>	- Use for request data and test
+	- GraphQL page (graphiql is enabled)
+	- Use for request data and test
