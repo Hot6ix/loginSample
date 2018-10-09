@@ -20,7 +20,7 @@ How to run
 
 You can go to url : <a target="_blank" href="http://localhost:3000/graphql">localhost:3000/graphql</a> to test graphql api
 
-GraphQL endpoint
+<h4>GraphQL endpoint</h4>
 - Query
 	- getUsers(Token) : Return user information list (need token to auth and user level must be greater than 0 in DB)
 	- getPosts : Return posts
@@ -30,4 +30,15 @@ GraphQL endpoint
 	- signUp(userInfo) : Sign up for new user and return message of singup result
 	- login(id, pw): Login using id and pw and return message of login result
 	- writePost(postInput, token): Write a post and return message of write result (need token to verify document owner)
+	- updatePost(pid, token, postInput): Update a post and return message of write result (need token to verify document owner)
 	- deletePost(pid, token): Delete a post and return message of write result (need token to verify document owner)
+
+<h4>Web endpoint</h4>
+- /
+	- Main page
+	- Can CRUD a post
+- /login
+	- Login and sign up page
+- /graphql
+	- GraphQL page (graphiql is enabled)
+	- Use for request data and test
