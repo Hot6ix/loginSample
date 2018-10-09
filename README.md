@@ -22,9 +22,9 @@ You can go to url : <a target="_blank" href="http://localhost:3000/graphql">loca
 
 <h4>GraphQL endpoint</h4>
 - Query
-	- getUsers(Token) : Return user information list (need token to auth and user level must be greater than 0 in DB)
-	- getPosts : Return posts
-	- getPost(pid): Return single post (need pid)
+</br>	- getUsers(Token) : Return user information list (need token to auth and user level must be greater than 0 in DB)
+</br>	- getPosts : Return posts
+</br>	- getPost(pid): Return single post (need pid)
   
 - Mutation
 	- signUp(userInfo) : Sign up for new user and return message of singup result
@@ -34,11 +34,11 @@ You can go to url : <a target="_blank" href="http://localhost:3000/graphql">loca
 	- deletePost(pid, token): Delete a post and return message of write result (need token to verify document owner)
 
 <h4>Web endpoint</h4>
-- /</br>
-	- Main page
-	- Can CRUD a post
-- /login</br>
-	- Login and sign up page
-- /graphql</br>
-	- GraphQL page (graphiql is enabled)
-	- Use for request data and test
+- /
+</br>	- Main page
+</br>	- Can CRUD a post
+- /login
+</br>	- Login and sign up page
+- /graphql
+</br>	- GraphQL page (graphiql is enabled)
+</br>	- Use for request data and test
