@@ -42,3 +42,44 @@ Web endpoint
 - /graphql
 	- GraphQL page (graphiql is enabled)
 	- Use for request data and test
+
+Project explorer
+/Controller
+- user.js
+	- signUp
+	- login
+	- getUser
+	- getUsers
+	- checkUser
+- post.js
+	- write
+	- update
+	- delete
+	- single
+	- list
+	
+/Schema
+- user.js
+	- uid : Unique identifier
+	- password : Password
+	- nickname : Unique name
+	- level : Auth level (0: normal user, else: admin)
+- post.js
+	- uid : Writer
+	- title
+	- content
+	- createdAt
+	
+/public/javascripts/cookie.js : create or clear cookie
+
+/routes/graphql.js
+/routes/index.js
+/routes/login.js
+/routes/users.js
+
+/tools/tokenManager.js : Gernerate and verify jwt
+
+/views/headers.ejs : Bootstrap navbar
+/views/index.ejs
+/views/login.ejs
+/views/users.ejs
