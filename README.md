@@ -8,9 +8,9 @@ Features
 
 What used
 Front-end : Bootstrap 4, jQuery
-</br>Back-end : Node.js, Express.js
-</br>Data fetching : GraphQL, Mongoose
-</br>Authentication : JWT
+Back-end : Node.js, Express.js
+Data fetching : GraphQL, Mongoose
+Authentication : JWT
 
 Pre-work
 - MongoDB and Node.js must be installed in your computer.
