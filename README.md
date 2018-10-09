@@ -35,10 +35,10 @@ You can go to url : <a target="_blank" href="http://localhost:3000/graphql">loca
 
 <h4>Web endpoint</h4>
 - /</br>
-	- Main page</br>
-	- Can CRUD a post</br>
+	- Main page
+	- Can CRUD a post
 - /login</br>
-	- Login and sign up page</br>
+	- Login and sign up page
 - /graphql</br>
-	- GraphQL page (graphiql is enabled)</br>
-	- Use for request data and test</br>
+	- GraphQL page (graphiql is enabled)
+	- Use for request data and test
