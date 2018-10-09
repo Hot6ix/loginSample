@@ -7,9 +7,13 @@ Features
 - CRUD a post
 
 What used
+
 Front-end : Bootstrap 4, jQuery
+
 Back-end : Node.js, Express.js
+
 Data fetching : GraphQL, Mongoose
+
 Authentication : JWT
 
 Pre-work
