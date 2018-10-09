@@ -74,13 +74,19 @@ Web endpoint
 /public/javascripts/cookie.js : create or clear cookie
 
 /routes/graphql.js
+
 /routes/index.js
+
 /routes/login.js
+
 /routes/users.js
 
 /tools/tokenManager.js : Gernerate and verify jwt
 
 /views/headers.ejs : Bootstrap navbar
+
 /views/index.ejs
+
 /views/login.ejs
+
 /views/users.ejs
