@@ -2,21 +2,21 @@
 
 This project does not use front-end framework like Vue.js or React.js, but just use Express.js, Bootstrap and jQuery.
 
-Features
+**Features**
 - Login
 - CRUD a post
 
-What used  
+**What use **  
 Front-end : Bootstrap 4, jQuery  
 Back-end : Node.js, Express.js  
 Data fetching : GraphQL, Mongoose  
 Authentication : JWT  
 
-Pre-work
+**Pre-work**
 - MongoDB and Node.js must be installed in your computer.
 - MongoDB must be run in your computer.
 
-How to run
+**How to run**
 1. Clone or download project
 2. Go to the project directory in command prompt
 3. Install dependencies -> "npm install"
@@ -25,7 +25,7 @@ How to run
 
 You can go to url : <a target="_blank" href="http://localhost:3000/graphql">localhost:3000/graphql</a> to test graphql api
 
-GraphQL queries and mutations
+**GraphQL queries and mutations**
 - Query
 	- getUsers(Token) : Return user information list (need token to auth and user level must be greater than 0 in DB)
 	- getPosts : Return posts
@@ -38,7 +38,7 @@ GraphQL queries and mutations
 	- updatePost(pid, token, postInput): Update a post and return message of write result (need token to verify document owner)
 	- deletePost(pid, token): Delete a post and return message of write result (need token to verify document owner)
 
-Web endpoint
+**Web endpoint**
 - /
 	- Main page
 	- Can CRUD a post
