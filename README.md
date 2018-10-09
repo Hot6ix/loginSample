@@ -22,11 +22,12 @@ You can go to url : <a target="_blank" href="http://localhost:3000/graphql">loca
 
 GraphQL endpoint
 - Query
-	- getUserInfo(Token) : Return user information (need token to auth)
 	- getUsers(Token) : Return user information list (need token to auth and user level must be greater than 0 in DB)
 	- getPosts : Return posts
+	- getPost(pid): Return single post (need pid)
   
 - Mutation
 	- signUp(userInfo) : Sign up for new user and return message of singup result
 	- login(id, pw): Login using id and pw and return message of login result
-	- writePost(postInput, token): Write a post and return message of write result (need token to auth)
+	- writePost(postInput, token): Write a post and return message of write result (need token to verify document owner)
+	- deletePost(pid, token): Delete a post and return message of write result (need token to verify document owner)
