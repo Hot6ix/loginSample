@@ -43,7 +43,7 @@ Web endpoint
 	- GraphQL page (graphiql is enabled)
 	- Use for request data and test
 
-Project explorer
+<h3>Project explorer</h3>
 /Controller
 - user.js
 	- signUp
