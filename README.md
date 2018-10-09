@@ -39,6 +39,8 @@ Web endpoint
 	- Can CRUD a post
 - /login
 	- Login and sign up page
+- /users
+	- Show user information
 - /graphql
 	- GraphQL page (graphiql is enabled)
 	- Use for request data and test
