@@ -52,3 +52,17 @@ You can go to url : <a target="_blank" href="http://localhost:3000/graphql">loca
 - /graphql
 	- GraphQL page (graphiql is enabled)
 	- Use for request data and test
+
+**Mongoose Schema**
+- User
+	- id(_id)
+	- uid
+	- password
+	- nickname
+	- level
+- Post
+	- id(_id)
+	- pid
+	- title
+	- content
+	- createdAt
