@@ -27,6 +27,7 @@ You can go to url : <a target="_blank" href="http://localhost:3000/graphql">loca
 
 **GraphQL queries and mutations**
 - Query
+	- getUserInfo(Token): Return user information using token
 	- getUsers(Token) : Return user information list (need token to auth and user level must be greater than 0 in DB)
 	- getPosts : Return posts
 	- getPost(pid): Return single post (need pid)
