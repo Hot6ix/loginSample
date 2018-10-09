@@ -4,7 +4,7 @@ Simple user board web application using several library. To learn graphql and ot
 
 **Features**
 - Login
-- CRUD a post
+- CRUD a post (Need login to CUD)
 
 **What used**  
 Front-end : Bootstrap 4, jQuery  
