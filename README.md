@@ -42,16 +42,27 @@ You can go to url : <a target="_blank" href="http://localhost:3000/graphql">loca
 	- deletePost(pid, token): Delete a post and return message of write result (need token to verify document owner)
 
 **Web endpoint**
-- /
-	- Main page
-	- Can CRUD a post
-- /login
-	- Login and sign up page
-- /users
-	- Show user information
-- /graphql
-	- GraphQL page (graphiql is enabled)
-	- Use for request data and test
+- /  
+	**- Main Page - List**  
+	![Main Page1](https://imgur.com/hs4VKst.png)
+	
+	**- Main Page - Write**  
+	![Main Page2](https://i.imgur.com/8UVbdHT.png)
+	
+	**- Main Page - Detail (Update or delete)**  
+	![Main Page3](https://imgur.com/6PfXQJ3.png)
+	
+- /login  
+	**- Login Page - Login or sign up**  
+	![Login Page](https://imgur.com/UHhQYCO.png)
+	
+- /users  
+	**- User Page - User information or log out**  
+	![User Page](https://imgur.com/gFmAXHY.png)
+	
+- /graphql  
+	**- GraphQL Page - Test queries and mutations
+	![GraphQL Page](https://imgur.com/fO7R3GF.png)
 
 **Mongoose Schema**
 - User
