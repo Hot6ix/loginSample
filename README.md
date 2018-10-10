@@ -61,7 +61,7 @@ You can go to url : <a target="_blank" href="http://localhost:3000/graphql">loca
 	![User Page](https://imgur.com/gFmAXHY.png)
 	
 - /graphql  
-	**- GraphQL Page - Test queries and mutations
+	**- GraphQL Page - Test queries and mutations**  
 	![GraphQL Page](https://imgur.com/fO7R3GF.png)
 
 **Mongoose Schema**
