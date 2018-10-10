@@ -1,6 +1,6 @@
 <h1>Simple user board project</h1>
 
-Simple user board web application using several library. To learn graphql and other libraries.
+Simple user board web application using several libraries. To learn graphql and other libraries.
 
 **Features**
 - Login
