@@ -14,7 +14,7 @@ Authentication : JWT
 
 This project does not use front-end framework like Vue.js or React.js, but just use Express.js, Bootstrap and jQuery.
 
-**Pre-work**
+**Prerequisite**
 - MongoDB and Node.js must be installed in your computer.
 - MongoDB must be run in your computer.
 
